@@ -13,6 +13,7 @@ The site's purpose: present deeply engineered, production-focused AI skills (sec
 ## Tech Stack (to be decided)
 
 No framework has been chosen yet. When starting the build, prefer a simple static site approach unless interactivity requires more:
+
 - **Recommended**: plain HTML/CSS/JS or a minimal static site generator (e.g., Astro, Eleventy, or Vite)
 - Keep dependencies minimal — this is a developer-credibility site; bloat undermines trust
 - The site should work without JavaScript where possible
@@ -20,6 +21,7 @@ No framework has been chosen yet. When starting the build, prefer a simple stati
 ## Site Structure (from brief)
 
 Single-page or multi-section site with these sections:
+
 1. Hero — core value prop and GitHub CTA
 2. What These Skills Do
 3. Skill Categories (Security, OWASP, Scalability, Reliability, Legal/Compliance, Supply Chain, DevOps, Payment/Fraud)
@@ -38,22 +40,7 @@ Single-page or multi-section site with these sections:
 
 ## Development Commands
 
-*(To be filled in once a framework is chosen and scaffolded.)*
-
-## Adding Skills
-
-Skills live in [skills/](skills/), one subfolder per category:
-
-- `skills/security-audit/`
-- `skills/owasp-adversarial/`
-- `skills/scalability-architecture/`
-- `skills/reliability-failure-analysis/`
-- `skills/legal-compliance/`
-- `skills/dependency-supply-chain/`
-- `skills/devops-production-readiness/`
-- `skills/payment-fraud-analysis/`
-
-Each skill is a `.md` file with a YAML frontmatter block (`name`, `description`, `tools`) followed by the system prompt body. See [skills/README.md](skills/README.md) for the full convention.
+_(To be filled in once a framework is chosen and scaffolded.)_
 
 ## Key Constraint
 
