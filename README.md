@@ -1,12 +1,9 @@
 # Skills /oss
 
-> My personal AI coding skills, shared in case they're useful to someone else.
+> These are my personal collection of skills that I use which have given me some good results over the time and I am just doing this so that they may be useful to someone else out there like me. They in no way guarantee any protection but they can help you get there.
 
-These are prompts and skill files I've collected and refined while working with AI coding agents — Claude Code, Cursor, Codex, and others. They've helped me catch real problems and build better interfaces. I'm sharing them because if they've helped me, maybe they'll help someone like me.
+> **Note on the design skills:** Three of the skills here — `design-taste-frontend`, `emil-design-eng`, and `impeccable` — are not mine. They were some of the first designing skills I used which I liked and gave a good output, so I kept them here for reference. Full credit goes to their real owners, as detailed below.
 
-**They come with no guarantees. Use your own judgement.**
-
-> **Note on the design skills:** Three of the skills here — `design-taste-frontend`, `emil-design-eng`, and `impeccable` — are not mine. They were some of the first design-focused skills I tried and they gave me noticeably better output than anything I'd been using, so I kept them here for reference. Full credit goes to their real owners, detailed in each skill's section below.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -45,6 +42,13 @@ Comes with:
 - `references/ATTACK_VECTORS.md` — OWASP checklist, security headers audit, RLS table, rate limiting matrix, sad-path test matrix, injection payload reference
 
 ```bash
+# Add this skill to your workspace using npx
+npx skills add Heet-P/skills --skill security-reviewer
+
+# Or for the pre-packaged .skill file:
+npx skills add Heet-P/skills --skill security-audit.skill
+
+# Usage with Claude Code
 /security-audit full          # Full adversarial audit
 /security-audit auth          # Auth and session only
 /security-audit payments      # Payment security and business logic
@@ -65,6 +69,13 @@ Comes with:
 - `references/SCALING_TIERS.md` — tier tables for database, caching, queues, deployment, observability; traffic stage roadmap from 1K to 1M+ DAU; failure simulation reference
 
 ```bash
+# Add this skill to your workspace using npx
+npx skills add Heet-P/skills --skill scale-check
+
+# Or for the pre-packaged .skill file:
+npx skills add Heet-P/skills --skill scalability-architecture.skill
+
+# Usage with Claude Code
 /scalability-architecture audit       # Full audit
 /scalability-architecture db          # Database layer only
 /scalability-architecture roadmap     # 1K → 1M user roadmap
@@ -85,6 +96,13 @@ Comes with:
 - `references/REPORT_FORMAT.md` — per-issue format with worked examples (missing signup consent, no cookie banner, no account deletion, AI output not labeled)
 
 ```bash
+# Add this skill to your workspace using npx
+npx skills add Heet-P/skills --skill legal-check
+
+# Or for the pre-packaged .skill file:
+npx skills add Heet-P/skills --skill legal-check.skill
+
+# Usage with Claude Code
 /legal-check audit        # Full audit
 /legal-check gdpr         # GDPR only
 /legal-check consent      # Consent flow implementation only
@@ -106,6 +124,11 @@ Covers: typography discipline (why not to default to serif, which display fonts 
 
 It also includes canonical code skeletons for the scroll patterns that agents usually get wrong — sticky stack, horizontal pan, scroll reveal.
 
+**Installation:**
+```bash
+npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"
+```
+
 ---
 
 ### ✨ Emil Design Engineering (`emil-design-eng/`)
@@ -117,6 +140,11 @@ UI polish and animation philosophy, based on Emil Kowalski's design engineering 
 This one is less about audits and more about taste. It covers the animation decision framework (should this animate at all? what easing? how fast?), spring animations, clip-path patterns, gesture and drag interactions, performance rules (only animate transform and opacity), accessibility (prefers-reduced-motion), and the Sonner principles for building components people actually love.
 
 I started using this one early on and kept it because it genuinely changed how I thought about animation decisions — and more importantly, how my agent made them.
+
+**Installation:**
+```bash
+npx skills add emilkowalski/skill
+```
 
 ---
 
@@ -139,6 +167,11 @@ This is the most structured of the design skills. It has context loading (PRODUC
 
 I use this for bigger UI projects where I want the agent working within a defined design system rather than making up decisions from scratch.
 
+**Installation:**
+```bash
+npx skills add pbakaus/impeccable
+```
+
 ---
 
 ## What These Have Helped Me Catch
@@ -155,16 +188,17 @@ I use this for bigger UI projects where I want the agent working within a define
 
 ## How I Use These
 
-Plain Markdown — nothing to install, no SDK, no account. I usually load a skill right before a focused pass.
+You can easily add skills to your workspace using `npx skills add`. I usually load a skill right before a focused pass.
 
 ```bash
-# Clone or copy individual folders into your agent's context directory
-gh repo clone Heet-P/skills .claude/skills
+# Example: Adding one of my skills
+npx skills add Heet-P/skills --skill security-reviewer
 
-# Before a security review
+# Example: Adding the Impeccable design skill
+npx skills add pbakaus/impeccable
+
+# After installing, just ask the agent to re-read its own output through that lens
 claude --skill security-reviewer "audit the auth changes in this PR"
-
-# Or just paste the SKILL.md content directly into your system prompt
 ```
 
 The simplest approach: find the skill that matches what you're about to do, paste it into context, and ask the agent to re-read its own output through that lens.

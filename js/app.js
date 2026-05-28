@@ -187,7 +187,7 @@ function renderDetail() {
     skillList.appendChild(row);
   });
 
-  const cmd = `gh repo clone open-skills/skills .claude/skills && claude --skill ${c.id} 'review my changes'`;
+  const cmd = `npx skills add Heet-P/skills --skill ${c.id} && claude --skill ${c.id} 'review my changes'`;
   const copyBtn = el("button", "copy-btn");
   const lbl = el("span", "lbl", "Copy install + invoke command");
   copyBtn.appendChild(el("span", "ic", "⌘"));

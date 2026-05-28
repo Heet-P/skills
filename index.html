@@ -73,9 +73,7 @@
             <div class="eyebrow">Personal collection &nbsp;·&nbsp; MIT Licensed &nbsp;·&nbsp; No guarantees</div>
             <h1>Skills I use when coding with <em>AI agents.</em> Shared in case they help you too.</h1>
             <p class="hero-sub">
-              These are prompts I've built up over time — things I reach for when I want my
-              AI coding agent to think a little harder about security, reliability, or scale.
-              They've helped me catch real issues. They might help you too.
+              These are my personal collection of skills that I use which have given me some good results over the time and I am just doing this so that they may be useful to someone else out there like me. They in no way guarantee any protection but they can help you get there.
             </p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="https://github.com" target="_blank" rel="noopener">
@@ -350,7 +348,7 @@
           <div>
             <h2 class="sec-title">Drop one in when it's relevant. <em>That's it.</em></h2>
             <p class="sec-lede">
-              Plain Markdown — nothing to install, no SDK, no account. I usually load
+              Install using npx commands — no SDK, no account. I usually load
               a skill right before a focused review, or keep a couple in my system
               prompt when I'm working in a sensitive area.
             </p>
@@ -364,9 +362,9 @@
               <span class="tt">~/myapp · claude code</span>
             </div>
             <div class="term-body">
-              <div><span class="pp">$</span> <span class="cmd">gh repo clone open-skills/skills .claude/skills</span>
+              <div><span class="pp">$</span> <span class="cmd">npx skills add Heet-P/skills --skill security-reviewer</span>
               </div>
-              <div class="out"> cloned 84 skills · 8 categories</div>
+              <div class="out"> added skill: security-reviewer</div>
               <br />
               <div><span class="pp">$</span> <span class="cmd">claude --skill security-audit "review the auth changes in
                   this PR"</span></div>
@@ -386,9 +384,9 @@
             <div class="ustep">
               <div class="ustep-n">i.</div>
               <div>
-                <h4 class="ustep-h">Grab the files you want.</h4>
+                <h4 class="ustep-h">Add the skill using npx.</h4>
                 <p class="ustep-p">
-                  Clone or just copy-paste individual files into <code>.claude/</code>,
+                  Use <code>npx skills add</code> to bring individual skills into <code>.claude/</code>,
                   <code>.cursor/</code>, or wherever your agent reads prompts from.
                   Take only what's useful to you.
                 </p>
