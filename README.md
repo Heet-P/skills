@@ -31,7 +31,7 @@ These skills are my attempt to close both gaps. Some are audit engines that ask 
 
 ## The Skills
 
-### 🔒 Security Audit (`security-reviewer/`)
+### 🔒 Security Audit (`security-audit/`)
 
 A deep adversarial security audit engine. Think like an attacker — not a developer.
 
@@ -43,7 +43,7 @@ Comes with:
 
 ```bash
 # Add this skill to your workspace using npx
-npx skills add Heet-P/skills --skill security-reviewer
+npx skills add Heet-P/skills --skill security-audit
 
 # Or for the pre-packaged .skill file:
 npx skills add Heet-P/skills --skill security-audit.skill
@@ -58,7 +58,7 @@ npx skills add Heet-P/skills --skill security-audit.skill
 
 ---
 
-### 📈 Scale Check (`scale-check/`)
+### 📈 Scalability Architecture (`scalability-architecture/`)
 
 A scalability and architecture audit engine. Find the thing that's fine on seed data and fatal in prod.
 
@@ -70,7 +70,7 @@ Comes with:
 
 ```bash
 # Add this skill to your workspace using npx
-npx skills add Heet-P/skills --skill scale-check
+npx skills add Heet-P/skills --skill scalability-architecture
 
 # Or for the pre-packaged .skill file:
 npx skills add Heet-P/skills --skill scalability-architecture.skill
@@ -192,13 +192,13 @@ You can easily add skills to your workspace using `npx skills add`. I usually lo
 
 ```bash
 # Example: Adding one of my skills
-npx skills add Heet-P/skills --skill security-reviewer
+npx skills add Heet-P/skills --skill security-audit
 
 # Example: Adding the Impeccable design skill
 npx skills add pbakaus/impeccable
 
 # After installing, just ask the agent to re-read its own output through that lens
-claude --skill security-reviewer "audit the auth changes in this PR"
+claude --skill security-audit "audit the auth changes in this PR"
 ```
 
 The simplest approach: find the skill that matches what you're about to do, paste it into context, and ask the agent to re-read its own output through that lens.
@@ -209,12 +209,12 @@ The simplest approach: find the skill that matches what you're about to do, past
 
 ```
 skills/
-├── security-reviewer/          ← adversarial security audit
+├── security-audit/             ← adversarial security audit
 │   ├── SKILL.md
 │   └── references/
 │       ├── REPORT_FORMAT.md
 │       └── ATTACK_VECTORS.md
-├── scale-check/                ← scalability & architecture audit
+├── scalability-architecture/   ← scalability & architecture audit
 │   ├── SKILL.md
 │   └── references/
 │       ├── REPORT_FORMAT.md

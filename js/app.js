@@ -1,6 +1,6 @@
 const CATEGORIES = [
   {
-    id: "security-reviewer",
+    id: "security-audit",
     name: "Security Audit",
     eyebrow: "Skill 01",
     titleText: "Think like an ",
@@ -13,11 +13,11 @@ const CATEGORIES = [
       ["S-03", "Payment Tampering", "pay"],
       ["S-04", "Rate Limiting Gaps", "sec"]
     ],
-    npxCommand: "npx skills add Heet-P/skills --skill security-reviewer"
+    npxCommand: "npx skills add Heet-P/skills --skill security-audit"
   },
   {
-    id: "scale-check",
-    name: "Scale Check",
+    id: "scalability-architecture",
+    name: "Scalability Architecture",
     eyebrow: "Skill 02",
     titleText: "Find the thing that's ",
     titleEm: "fine on seed data",
@@ -29,7 +29,7 @@ const CATEGORIES = [
       ["SC-03", "Traffic Simulation", "scale"],
       ["SC-04", "Tiered Recommendations", "scale"]
     ],
-    npxCommand: "npx skills add Heet-P/skills --skill scale-check"
+    npxCommand: "npx skills add Heet-P/skills --skill scalability-architecture"
   },
   {
     id: "legal-check",
