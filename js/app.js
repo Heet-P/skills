@@ -1,132 +1,99 @@
 const CATEGORIES = [
   {
-    id: "security",
+    id: "security-reviewer",
     name: "Security Audit",
-    eyebrow: "Skills 01 — 14",
-    titleText: "Read the diff like an ",
+    eyebrow: "Skill 01",
+    titleText: "Think like an ",
     titleEm: "attacker",
-    titleTail: " would.",
-    desc: "Static review skills that scan handlers, middleware, auth flows and secrets boundaries — looking for the assumption the agent didn't realise it was making.",
+    titleTail: " — not a developer.",
+    desc: "A deep adversarial security audit engine. Asks the agent to map the full attack surface, simulate real exploits step-by-step, and produce a structured findings report.",
     skills: [
-      ["S-01", "Authorisation re-check", "authz"],
-      ["S-02", "Secrets & key handling", "crypto"],
-      ["S-03", "Input validation & canonicalisation", "input"],
-      ["S-04", "Server-side session integrity", "session"],
-      ["S-05", "CSRF, CORS, and origin policy", "browser"],
-      ["S-06", "Authenticated SSRF audit", "network"]
-    ]
+      ["S-01", "OWASP Top 10", "owasp"],
+      ["S-02", "IDOR & Access Control", "authz"],
+      ["S-03", "Payment Tampering", "pay"],
+      ["S-04", "Rate Limiting Gaps", "sec"]
+    ],
+    npxCommand: "npx skills add Heet-P/skills --skill security-reviewer"
   },
   {
-    id: "owasp",
-    name: "OWASP & Adversarial Testing",
-    eyebrow: "Skills 15 — 24",
-    titleText: "Replay the ",
-    titleEm: "OWASP top ten",
-    titleTail: " against your own code.",
-    desc: "Adversarial review skills that simulate the canonical exploit patterns and write the failing test cases the agent should have written first.",
-    skills: [
-      ["O-01", "Injection (SQL, NoSQL, command)", "owasp"],
-      ["O-02", "Broken access control playbook", "owasp"],
-      ["O-03", "Cryptographic failures sweep", "owasp"],
-      ["O-04", "Server-side request forgery", "owasp"],
-      ["O-05", "Deserialisation & prototype pollution", "owasp"]
-    ]
-  },
-  {
-    id: "scale",
-    name: "Scalability & Architecture",
-    eyebrow: "Skills 25 — 36",
-    titleText: "Find the call that's ",
+    id: "scale-check",
+    name: "Scale Check",
+    eyebrow: "Skill 02",
+    titleText: "Find the thing that's ",
     titleEm: "fine on seed data",
     titleTail: " and fatal in prod.",
-    desc: "Skills that read endpoints and queries with a load profile in mind — N+1s, missing indexes, unbounded scans, fan-out reads, and shared mutable state at the edges.",
+    desc: "A scalability and architecture audit engine. Maps the entire system, simulates traffic at each stage (100 concurrent → viral spike), and produces tiered recommendations.",
     skills: [
-      ["A-01", "N+1 & query budget review", "db"],
-      ["A-02", "Index & cardinality audit", "db"],
-      ["A-03", "Cache key design & invalidation", "cache"],
-      ["A-04", "Read/write split & replica lag", "db"],
-      ["A-05", "Hot partition & tenant skew", "db"]
-    ]
+      ["SC-01", "Connection Pooling", "db"],
+      ["SC-02", "Missing Indexes", "db"],
+      ["SC-03", "Traffic Simulation", "scale"],
+      ["SC-04", "Tiered Recommendations", "scale"]
+    ],
+    npxCommand: "npx skills add Heet-P/skills --skill scale-check"
   },
   {
-    id: "reliability",
-    name: "Reliability & Failure Analysis",
-    eyebrow: "Skills 37 — 48",
-    titleText: "Assume something ",
-    titleEm: "will break.",
-    titleTail: " Then check.",
-    desc: "Skills written from on-call experience — retry policies, idempotency, timeouts, partial failure, graceful degradation, and observability you actually need at 3am.",
+    id: "legal-check",
+    name: "Legal Check",
+    eyebrow: "Skill 03",
+    titleText: "Catch the compliance ",
+    titleEm: "gaps",
+    titleTail: " that matter.",
+    desc: "A legal, privacy, and compliance audit engine. Scans the codebase for compliance gaps: missing consent flows, unsigned webhooks, and GDPR/CCPA issues.",
     skills: [
-      ["R-01", "Retry, backoff & jitter review", "sre"],
-      ["R-02", "Idempotency key audit", "sre"],
-      ["R-03", "Timeout budget & cascade map", "sre"],
-      ["R-04", "Circuit breakers & bulkheads", "sre"],
-      ["R-05", "Observability completeness check", "obs"]
-    ]
+      ["L-01", "GDPR / CCPA / PIPEDA", "privacy"],
+      ["L-02", "Consent Flow Integrity", "privacy"],
+      ["L-03", "Data Retention Policy", "legal"],
+      ["L-04", "Cookie & AI Disclosures", "legal"]
+    ],
+    npxCommand: "npx skills add Heet-P/skills --skill legal-check"
   },
   {
-    id: "legal",
-    name: "Legal & Compliance",
-    eyebrow: "Skills 49 — 58",
-    titleText: "Catch the line that becomes a ",
-    titleEm: "regulator's question.",
-    titleTail: "",
-    desc: "Compliance-aware skills for data handling, retention, consent, cross-border transfer, accessibility, and the seams where engineering decisions become legal posture.",
+    id: "design-taste-frontend",
+    name: "Design Taste",
+    eyebrow: "Skill 04",
+    titleText: "Ship interfaces that ",
+    titleEm: "don't look",
+    titleTail: " templated.",
+    desc: "An anti-slop frontend skill for landing pages. Covers typography discipline, color calibration, layout rules, and real asset generation.",
     skills: [
-      ["L-01", "PII inventory & data map", "privacy"],
-      ["L-02", "GDPR / CCPA retention check", "privacy"],
-      ["L-03", "Consent flow integrity", "privacy"],
-      ["L-04", "Accessibility (WCAG 2.2) review", "a11y"],
-      ["L-05", "Cross-border transfer audit", "privacy"]
-    ]
+      ["D-01", "Typography Discipline", "design"],
+      ["D-02", "Color Calibration", "design"],
+      ["D-03", "Layout & Anti-Center Bias", "design"],
+      ["D-04", "Scroll Reveal Skeletons", "ux"]
+    ],
+    npxCommand: "npx skills add https://github.com/Leonxlnx/taste-skill --skill \"design-taste-frontend\""
   },
   {
-    id: "supply",
-    name: "Dependency & Supply Chain",
-    eyebrow: "Skills 59 — 68",
-    titleText: "Every new import is a ",
-    titleEm: "trust decision.",
-    titleTail: "",
-    desc: "Skills that inspect the dependency graph the agent just expanded — maintainers, age, install scripts, transitive risk, and known advisories.",
+    id: "emil-design-eng",
+    name: "Emil Design",
+    eyebrow: "Skill 05",
+    titleText: "The invisible ",
+    titleEm: "details",
+    titleTail: " that make software feel great.",
+    desc: "UI polish and animation philosophy, based on Emil Kowalski's design engineering work. Covers spring animations, clip-path patterns, and performance rules.",
     skills: [
-      ["D-01", "New dependency review", "deps"],
-      ["D-02", "Install-script & postinstall audit", "deps"],
-      ["D-03", "Lockfile drift & pinning", "deps"],
-      ["D-04", "Transitive advisory sweep", "deps"],
-      ["D-05", "Maintainer & provenance check", "deps"]
-    ]
+      ["E-01", "Animation Philosophy", "anim"],
+      ["E-02", "Spring & Clip-Path Patterns", "anim"],
+      ["E-03", "Gesture Interactions", "ux"],
+      ["E-04", "Accessibility (Reduced Motion)", "a11y"]
+    ],
+    npxCommand: "npx skills add emilkowalski/skill"
   },
   {
-    id: "devops",
-    name: "DevOps & Production Readiness",
-    eyebrow: "Skills 69 — 78",
-    titleText: "Is this actually ",
-    titleEm: "deployable",
-    titleTail: ", or just runnable?",
-    desc: "Skills for the gap between feature-complete and production-ready — health checks, configuration, rollouts, migrations, rollback, secrets, and on-call hand-off.",
+    id: "impeccable",
+    name: "Impeccable",
+    eyebrow: "Skill 06",
+    titleText: "A full-featured ",
+    titleEm: "design system",
+    titleTail: " with 20+ commands.",
+    desc: "The most structured design skill. Features context loading, brand vs. product registers, and a rich command menu covering the full design workflow.",
     skills: [
-      ["P-01", "Production readiness checklist", "prod"],
-      ["P-02", "Migration safety & reversibility", "prod"],
-      ["P-03", "Config & secrets at runtime", "prod"],
-      ["P-04", "Health, readiness & liveness", "prod"],
-      ["P-05", "Rollout, rollback & canary plan", "prod"]
-    ]
-  },
-  {
-    id: "payments",
-    name: "Payment & Fraud Analysis",
-    eyebrow: "Skills 79 — 84",
-    titleText: "Money flows demand a ",
-    titleEm: "different posture.",
-    titleTail: "",
-    desc: "Skills for charge, refund, payout and webhook code — signature verification, replay protection, idempotency, currency handling, and the fraud heuristics that catch the obvious losses.",
-    skills: [
-      ["F-01", "Webhook signature & replay", "pay"],
-      ["F-02", "Charge / refund idempotency", "pay"],
-      ["F-03", "Currency & rounding integrity", "pay"],
-      ["F-04", "Velocity & fraud heuristics", "fraud"],
-      ["F-05", "PCI scope minimisation", "pay"]
-    ]
+      ["I-01", "Craft & Shape (Build)", "sys"],
+      ["I-02", "Critique & Audit (Evaluate)", "sys"],
+      ["I-03", "Polish & Harden (Refine)", "sys"],
+      ["I-04", "Animate & Overdrive (Enhance)", "sys"]
+    ],
+    npxCommand: "npx skills add pbakaus/impeccable"
   }
 ];
 
@@ -187,7 +154,7 @@ function renderDetail() {
     skillList.appendChild(row);
   });
 
-  const cmd = `npx skills add Heet-P/skills --skill ${c.id} && claude --skill ${c.id} 'review my changes'`;
+  const cmd = `${c.npxCommand} && claude --skill ${c.id} 'review my changes'`;
   const copyBtn = el("button", "copy-btn");
   const lbl = el("span", "lbl", "Copy install + invoke command");
   copyBtn.appendChild(el("span", "ic", "⌘"));
