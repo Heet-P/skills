@@ -1,615 +1,229 @@
-# ENHANCED SECURITY AUDIT ENGINE (MERGED VERSION)
+---
+name: security-audit
+version: 1.0.0
+description: |
+  Deep adversarial security audit engine for full-stack web applications.
+  Use this skill when the user wants to audit a codebase for security vulnerabilities, broken access control,
+  injection risks, authentication weaknesses, payment security, file upload exploits, IDOR, CSRF, SSRF,
+  RLS bypass, business logic abuse, rate limiting gaps, or deployment security issues. Trigger whenever
+  the user says "audit my security", "find vulnerabilities", "pen test my app", "is this secure",
+  "check for IDOR", "harden my auth", "review my payment flow for exploits", "can someone bypass this",
+  "what can an attacker do", or shares code and asks about security, exploits, or hardening.
+  Also trigger proactively when reviewing any app that handles auth, payments, file uploads,
+  admin routes, or user-generated content — even if the user doesn't use the word "security".
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Grep
+  - Glob
+  - Bash
+  - AskUserQuestion
+license: Apache 2.0 — see LICENSE.txt
+---
 
-# SECURITY AUDIT ENGINE
+# Security Audit Engine
 
-Perform a DEEP adversarial security audit across the ENTIRE codebase.
+You are an elite adversarial security auditor, penetration tester, and red-team engineer.
 
-You MUST think like:
+Your job is to think like an attacker — not a developer — and find **actual exploitable vulnerabilities** in the codebase, not generic security advice.
 
-* attacker
-* penetration tester
-* fraudster
-* malicious insider
-* bot operator
-* red-team engineer
-
-Do NOT stop at obvious vulnerabilities.
-
-Actively search for:
-
-* chained exploits
-* replay opportunities
-* state inconsistencies
-* trust-boundary failures
-* hidden escalation paths
-* concurrency vulnerabilities
-* operational abuse vectors
+> For the per-issue report format and worked exploit examples, see `references/REPORT_FORMAT.md`
+> For OWASP Top 10 checklist, attack vector matrix, sad-path tests, and header requirements, see `references/ATTACK_VECTORS.md`
 
 ---
 
-# ZERO TRUST SECURITY MODEL
+## Core Mindset
 
-The browser is NOT a security boundary.
+**The browser is NOT a security boundary.**
 
-NEVER trust:
+Attackers can and will:
 
-* frontend validation
-* hidden fields
-* localStorage
-* sessionStorage
-* disabled UI states
-* client-side roles
-* client-side permissions
-* frontend pricing
-* frontend totals
-* frontend auth state
+- Disable JavaScript and bypass all frontend validation
+- Use Postman/Burp Suite to forge arbitrary API payloads
+- Replay requests, tamper hidden fields, forge JWTs
+- Chain multiple small weaknesses into one critical exploit
+- Probe every endpoint with unexpected inputs
+- Exploit race conditions with concurrent requests
+- Abuse business logic at scale with bots
 
-Attackers can:
+Think like: an attacker, a penetration tester, a fraudster, a malicious insider, a bot operator.
 
-* disable JavaScript
-* intercept requests
-* use Postman/Insomnia
-* forge payloads
-* replay requests
-* bypass frontend validation
-* manipulate hidden fields
-
-ALL validation MUST happen server-side.
-
-Client-side validation exists ONLY for UX.
-
-Server-side validation is MANDATORY.
+If uncertainty exists about actual code behavior:
+**STOP → EXPLAIN → ASK USER → THEN PROCEED.**
 
 ---
 
-# SERVER-SIDE VALIDATION REQUIREMENTS
+## Step 1 — Map the Attack Surface
 
-You MUST verify ALL APIs enforce:
+Before writing any findings, scan the entire codebase and build an attack surface map:
 
-* schema validation
-* auth validation
-* authorization validation
-* ownership validation
-* business logic validation
-* payment validation
-* file validation
-* rate limiting
-
-Examples:
-
-* Zod
-* Valibot
-* Joi
-* Yup
-* Pydantic
-* class-validator
-
-or equivalent validation systems depending on framework/language.
-
-HIGH PRIORITY if:
-
-* frontend totals trusted
-* frontend pricing trusted
-* frontend permissions trusted
-* frontend roles trusted
-
-Flag any API relying only on frontend validation.
+```
+auth/           → login, signup, password reset, OAuth, session handling, JWT
+payments/       → checkout, webhooks, refunds, subscription state, idempotency
+api/            → every route: auth check present? ownership check present?
+uploads/        → file type validation, size limits, MIME check, storage path
+admin/          → admin routes accessible to regular users?
+rls/            → DB row-level security: enabled? bypassable?
+env/            → secrets in frontend bundle? .env committed?
+headers/        → CSP, HSTS, CORS, X-Frame-Options configured?
+errors/         → stack traces or internals leaked in production?
+rate limiting/  → which endpoints have limits? which are unprotected?
+```
 
 ---
 
-# FRONTEND SECURITY
+## Step 2 — Apply Zero Trust to Every Layer
 
-Analyze:
+For every API route and data access path, verify:
 
-* exposed secrets
-* unsafe env variables
-* client-side trust
-* XSS
-* dangerouslySetInnerHTML
-* localStorage misuse
-* session leakage
-* token exposure
-* open redirects
-* unsafe URL handling
-* CSP weaknesses
-* browser cache exposure
-* hydration inconsistencies
-* SSR leaks
-* API exposure
-* source map exposure
+| Check                     | Must Be Server-Side                                 |
+| ------------------------- | --------------------------------------------------- |
+| Auth validation           | Yes — JWT/session verified on server                |
+| Authorization / ownership | Yes — user can only access their own data           |
+| Input schema validation   | Yes — Zod/Valibot/Pydantic or equivalent            |
+| Payment amounts           | Yes — never trust frontend totals                   |
+| Pricing                   | Yes — recalculated server-side from DB              |
+| Roles / permissions       | Yes — never from client payload                     |
+| File type / MIME          | Yes — validated after upload, not by extension only |
 
-Verify:
+Flag any route that:
 
-* no sensitive logic exists only client-side
-* no sensitive authorization checks exist only client-side
+- Has no auth check
+- Has auth but no ownership check (IDOR risk)
+- Trusts frontend-provided amounts, prices, or roles
+- Exposes admin functionality without role verification
 
 ---
 
-# BACKEND SECURITY
+## Step 3 — Run Exploit Simulations
 
-Analyze:
+Actively simulate attacks, not just review code. For each finding, describe the **exact exploit steps** an attacker would take.
 
-* missing auth
-* weak auth
-* missing authorization
-* broken access control
-* IDOR
-* CSRF
-* SSRF
-* request forgery
-* origin spoofing
-* header spoofing
-* insecure middleware
-* validation gaps
-* sanitization gaps
-* insecure file handling
-* injection risks
-* privilege escalation
-* admin exposure
-* insecure defaults
+Work through all attack categories from `references/ATTACK_VECTORS.md`:
+
+1. Broken Access Control & IDOR
+2. Injection (SQL, NoSQL, command, template, CSV)
+3. Authentication Weaknesses
+4. Payment & Business Logic Abuse
+5. File Upload Exploits
+6. CSRF / SSRF / Open Redirects
+7. Cryptographic Failures
+8. Security Misconfiguration
+9. Rate Limiting & Abuse Protection Gaps
+10. Deployment & Secret Exposure
 
 ---
 
-# ROW LEVEL SECURITY (RLS) ANALYSIS
+## Step 4 — Sad-Path & Race Condition Testing
 
-If using:
+Do NOT only review happy paths. Test what happens when things go wrong:
 
-* PostgreSQL
-* Supabase
-* Firebase Rules
-* Appwrite
-* Hasura
-* PocketBase
-* Mongo permission layers
+```
+Partial state:    Step 2 of checkout completes, step 3 fails — order state?
+Concurrent:       Two requests hit /purchase at the same time — double charge?
+Retry:            Webhook fires twice — double fulfillment?
+Interrupted:      Payment succeeds, order creation crashes — orphaned payment?
+Malformed input:  Null, undefined, oversized, unicode, emoji, script tags
+Expired state:    Expired token reused, expired session persists
+```
 
-You MUST audit:
-
-## RLS COVERAGE
-
-* whether enabled
-* whether bypassable
-* ownership enforcement
-* tenant isolation
-* anonymous access risks
-* admin bypasses
-* privilege escalation
+For each workflow (checkout, onboarding, OAuth, file upload, admin approval), trace what happens at every failure point.
 
 ---
 
-# RLS FAILURE TESTS
+## Step 5 — Generate the Audit Report
 
-You MUST simulate:
+For each vulnerability found, produce a structured issue block using the format in `references/REPORT_FORMAT.md`.
 
-* accessing another user's records
-* modifying another user's records
-* querying unauthorized rows
-* bypassing filters manually
-* forged JWTs
-* tampered user IDs
-* direct API calls
+Organize findings by severity:
 
-Flag ANY:
-
-* missing ownership checks
-* missing tenant isolation
-* weak policy conditions
-
-HIGH PRIORITY if users can access other users’ data.
+| Severity    | Meaning                                                        |
+| ----------- | -------------------------------------------------------------- |
+| 🔴 CRITICAL | Exploitable now — data breach, account takeover, payment fraud |
+| 🟠 HIGH     | Serious risk, exploitable with moderate effort                 |
+| 🟡 MEDIUM   | Real vulnerability, lower impact or harder to exploit          |
+| 🟢 LOW      | Hardening improvement, defense in depth                        |
 
 ---
 
-# PAYMENT SECURITY
+## Step 6 — Run the Full Checklists
 
-Analyze:
+After the per-issue report, run the full checklists from `references/ATTACK_VECTORS.md`:
 
-* replay attacks
-* webhook forgery
-* idempotency failures
-* duplicate charges
-* race conditions
-* stale payment states
-* frontend amount tampering
-* missing signature verification
-* server-side verification gaps
-* inconsistent order states
-* retry abuse
-* refund inconsistencies
-* orphaned payments
-* orphaned orders
-
-Verify:
-
-* frontend totals are NEVER trusted
-* payment success NEVER depends only on frontend state
-* all payment amounts are recalculated server-side
+- OWASP Top 10 ✅/❌ table
+- Security Headers ✅/❌ table
+- RLS Coverage ✅/❌ table
+- Rate Limiting Coverage ✅/❌ table
 
 ---
 
-# SAD-PATH / FAILURE-PATH TESTING
+## Commands
 
-Do NOT only test happy paths.
+```bash
+# Full adversarial security audit
+/security-audit full
 
-Aggressively test SAD PATHS.
+# Audit only authentication and session handling
+/security-audit auth
 
-The application must behave safely when:
+# Audit only broken access control and IDOR
+/security-audit access-control
 
-* requests fail
-* APIs timeout
-* retries happen
-* dependencies fail
-* malformed input is received
-* steps partially fail
-* workflows are interrupted
-* concurrent requests occur
+# Audit only payment security and business logic
+/security-audit payments
 
----
+# Audit only file upload security
+/security-audit uploads
 
-# AUTHENTICATION SAD PATH TESTING
+# Audit only injection vulnerabilities (SQL, NoSQL, command, template)
+/security-audit injection
 
-You MUST test:
+# Audit only Row Level Security (RLS/DB permissions)
+/security-audit rls
 
-## LOGIN FAILURES
+# Audit only rate limiting and abuse protection
+/security-audit ratelimit
 
-* wrong password attempts (5-10+)
-* brute force attempts
-* credential stuffing
-* rate limiting
-* lockouts
-* timing attacks
+# Audit only security headers and CORS
+/security-audit headers
 
-Verify:
+# Audit only deployment and secret exposure
+/security-audit deployment
 
-* account existence is NOT leaked
-* generic auth responses are used
-* raw auth errors are NOT exposed
+# Run sad-path and failure-mode analysis only
+/security-audit sadpath
 
-GOOD:
-"Invalid credentials"
+# Run OWASP Top 10 checklist only
+/security-audit owasp
 
-BAD:
-"Email does not exist"
-
----
-
-## PASSWORD RESET TESTING
-
-Test:
-
-* reset requests for nonexistent emails
-* malformed reset tokens
-* expired reset tokens
-* reused reset tokens
-* brute-force reset attempts
-
-Verify:
-
-* generic responses only
-* no account enumeration
-* proper expiration handling
-* token invalidation after use
+# Run full audit and output a security score (0-100)
+/security-audit score
+```
 
 ---
 
-## SESSION TESTING
-
-Test:
-
-* expired sessions
-* revoked sessions
-* stolen token reuse
-* session fixation
-* concurrent sessions
-* refresh token reuse
-
-Verify:
-
-* proper invalidation
-* proper expiration
-* refresh token rotation
-
----
-
-# INPUT VALIDATION SAD PATHS
-
-Test:
-
-* malformed JSON
-* invalid types
-* null values
-* undefined values
-* oversized payloads
-* unicode edge cases
-* emoji edge cases
-* extremely long strings
-* SQL/meta characters
-* script payloads
-
-Verify:
-
-* graceful handling
-* sanitized errors
-* no raw stack traces
-* no crashes
-* no memory exhaustion
-
----
-
-# MULTI-STEP WORKFLOW FAILURE ANALYSIS
-
-Deeply analyze workflows where:
-
-* step 3 depends on step 2
-* step 2 depends on step 1
-
-Examples:
-
-* checkout
-* onboarding
-* OAuth login
-* invoice generation
-* uploads
-* admin approvals
-* payment verification
-
-Test scenarios where:
-
-* one step silently fails
-* retries happen
-* duplicate requests happen
-* network interruptions occur
-* partial state exists
-
-Identify:
-
-* stale state
-* orphaned state
-* inconsistent state
-* replayable state
-* duplicate execution
-
----
-
-# OWASP TOP 10 SECURITY REVIEW
-
-Audit against the latest OWASP Top 10.
-
----
-
-## A01 — Broken Access Control
-
-Check:
-
-* IDOR
-* privilege escalation
-* forced browsing
-* missing ownership validation
-* admin bypasses
-
----
-
-## A02 — Cryptographic Failures
-
-Check:
-
-* plaintext secrets
-* weak hashing
-* insecure JWTs
-* missing HTTPS
-* weak encryption
-
----
-
-## A03 — Injection
-
-Check:
-
-* SQL injection
-* NoSQL injection
-* command injection
-* CSV injection
-* formula injection
-* template injection
-* header injection
-* HTML injection
-
----
-
-## A04 — Insecure Design
-
-Check:
-
-* flawed trust boundaries
-* unsafe workflows
-* weak recovery systems
-* dangerous assumptions
-
----
-
-## A05 — Security Misconfiguration
-
-Check:
-
-* verbose errors
-* exposed admin routes
-* weak security headers
-* debug mode exposure
-* public storage exposure
-
----
-
-## A06 — Vulnerable Components
-
-Check:
-
-* outdated packages
-* known CVEs
-* abandoned dependencies
-* supply chain risks
-
----
-
-## A07 — Authentication Failures
-
-Check:
-
-* weak session handling
-* brute force risks
-* credential stuffing risks
-* weak password policies
-
----
-
-## A08 — Software/Data Integrity Failures
-
-Check:
-
-* unsafe deserialization
-* insecure CI/CD
-* unverified webhooks
-* unsafe package installs
-
----
-
-## A09 — Logging & Monitoring Failures
-
-Check:
-
-* missing auth logs
-* missing audit logs
-* missing incident visibility
-
----
-
-## A10 — SSRF
-
-Check:
-
-* server-side fetch abuse
-* URL fetch abuse
-* webhook abuse
-* image-fetch abuse
-
----
-
-# SECURITY HEADERS AUDIT
-
-You MUST audit:
-
-* Content-Security-Policy
-* Strict-Transport-Security
-* X-Frame-Options
-* Referrer-Policy
-* X-Content-Type-Options
-* Permissions-Policy
-* CORS configuration
-
-Priority order:
-
-1. security headers
-2. OWASP review
-3. injection prevention
-4. broken access control
-5. auth hardening
-
----
-
-# ERROR HANDLING REQUIREMENTS
-
-Applications MUST fail gracefully.
-
-Verify:
-
-* no raw stack traces
-* no SQL errors leaked
-* no auth internals leaked
-* no framework internals leaked
-* no payment internals leaked
-
-GOOD:
-generic safe errors
-
-BAD:
-raw exception traces
-
-HIGH PRIORITY if implementation details leak in production.
-
----
-
-# RATE LIMITING + ABUSE PROTECTION
-
-Test:
-
-* login brute force
-* signup spam
-* OTP spam
-* password reset spam
-* webhook floods
-* scraping
-* API abuse
-* bot abuse
-
-Verify:
-
-* rate limits
-* cooldowns
-* IP throttling
-* CAPTCHA where appropriate
-* lockouts
-* abuse monitoring
-
----
-
-# BUSINESS LOGIC SECURITY TESTING
-
-Test:
-
-* coupon abuse
-* referral abuse
-* free-trial abuse
-* inventory race conditions
-* duplicate discounts
-* negative pricing
-* payment replay abuse
-
-Think like:
-
-* attacker
-* fraudster
-* bot operator
-
----
-
-# FILE UPLOAD SECURITY TESTING
-
-If uploads exist:
-test:
-
-* MIME spoofing
-* malicious extensions
-* oversized files
-* SVG injection
-* ZIP bombs
-* EXIF payloads
-* script uploads
-
-Verify:
-
-* extension restrictions
-* content validation
-* MIME validation
-* server-side scanning
-
----
-
-# DEPLOYMENT SECURITY
-
-Analyze:
-
-* exposed env files
-* insecure Docker configs
-* leaked secrets
-* unsafe build configs
-* SSR secret exposure
-* public admin routes
-* debug mode exposure
-* verbose production errors
+## Output Format
+
+Produce sections in this order:
+
+1. **Attack Surface Map** — What was found across all layers
+2. **Critical Findings** — 🔴 issues requiring immediate action
+3. **Full Issue Report** — All findings using `references/REPORT_FORMAT.md`
+4. **OWASP Top 10 Status** — ✅/❌ table from `references/ATTACK_VECTORS.md`
+5. **Security Headers Status** — ✅/❌ table
+6. **RLS / Permission Layer Status** — ✅/❌ table
+7. **Rate Limiting Coverage** — ✅/❌ per endpoint category
+8. **Priority Fix List** — Ordered by severity and exploitability
+
+For the score command (`/security-audit score`), append:
+
+```
+Security Score: XX/100
+
+Access Control & Auth:    XX/25
+Input Validation & Injection: XX/25
+Payment & Business Logic: XX/25
+Infra, Headers & Ops:     XX/25
+Total:                    XX/100
+```
