@@ -1,60 +1,74 @@
 # Skills /oss
 
-> Production-grade engineering skills for AI coding agents.
+> My personal AI coding skills, shared in case they're useful to someone else.
 
-A curated, open-source library of system prompts that make Claude Code, Codex, Cursor, Cline, and other AI coding agents reason like senior engineers — auditing security, scalability, reliability, and compliance **before code ships**.
+These are prompts I've collected and refined while working with AI coding agents like Claude Code, Cursor, Codex and Cline. They've helped me catch real problems — security holes, reliability gaps, things that would've been fine in dev and broken in prod.
+
+I'm not sharing these because they're perfect or because I've proven them at scale. I'm sharing them because if they've helped me, maybe they'll help someone like me. **They come with no guarantees. Use your own judgement.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![Skills](https://img.shields.io/badge/skills-84-ff0080)
-![Categories](https://img.shields.io/badge/categories-8-blueviolet)
 
 ---
 
-## The Problem
+## What this is
 
-Most AI coding agents optimise for code that _runs_. They rarely think about code that _fails_ — under load, under attack, under audit.
+When I started using AI agents for real coding work, I noticed a gap: the agent was great at writing code that worked on the happy path, and pretty blind to everything else. Security edge cases, retry logic, N+1 queries, unsigned webhooks — it would sail right past all of it.
 
-- **Generic prompts miss specialist context.** A senior security engineer doesn't think like a senior SRE. Skills encode the mental model of each discipline.
-- **Agents trust their own output.** Skills force adversarial review — re-reading the agent's own diff with the posture of an attacker, an auditor, or an on-call engineer at 3am.
-- **Production fails at the seams.** Race conditions, retry storms, expired tokens, broken webhooks. Skills include checklists drawn from real post-mortems.
+So I started writing prompts that asked it to slow down and look harder at specific things. Over time those prompts became more refined. This is that collection.
 
----
+**What these are:**
+- Plain Markdown files you drop into your agent's context
+- Prompts that ask your agent to review code through a specific lens (security, reliability, etc.)
+- Things that have worked for me across real projects
 
-## Compatible With
+**What these aren't:**
+- A security audit tool
+- A guarantee that your code is safe, scalable, or compliant
+- A substitute for actual expert review
+- A product with a team behind it
 
-| Agent | Integration |
-|-------|-------------|
-| Claude Code | `--skill <name>` flag or system prompt |
-| OpenAI Codex | System prompt injection |
-| Cursor | `.cursorrules` or Composer context |
-| Cline | System prompt / MCP context |
-| Roo | Rules file |
-| OpenHands | System prompt |
+If a skill helps you catch something before it ships — great. If it misses something critical — that's on both of us for not doing proper due diligence.
 
 ---
 
-## Quick Start
+## Compatible Agents
+
+I mostly use these with Claude Code and Cursor, but they're plain text so they work anywhere you can pass a system prompt:
+
+- Claude Code
+- Cursor
+- OpenAI Codex
+- Cline
+- Roo
+- OpenHands
+- Any agent that accepts a system prompt or context file
+
+---
+
+## How I Use Them
 
 ```bash
-# Clone the skill library into your project
-gh repo clone open-skills/skills .claude/skills
+# Clone the repo
+gh repo clone <your-fork>/skills .claude/skills
 
-# Run a focused security review on a PR
+# Before reviewing auth changes
 claude --skill security-audit "review the auth changes in this PR"
 
-# Or load multiple skills for a full production-readiness pass
-claude --skill security-audit --skill reliability --skill scalability "review this new endpoint"
+# Before shipping a new async worker
+claude --skill reliability "check this queue consumer for failure modes"
+
+# Or just paste the skill content directly into your system prompt
 ```
+
+The simplest approach: find the skill that matches what you're about to do, paste it into context, and ask your agent to re-read its own output through that lens.
 
 ---
 
-## Skill Categories
+## The Collection
 
-### 01 · Security Audit _(Skills 01 – 14)_
+### 01 · Security Audit _(Skills 01–14)_
 
-Read the diff like an _attacker_ would.
-
-Static review skills that scan handlers, middleware, auth flows and secrets boundaries — looking for the assumption the agent didn't realise it was making.
+When I'm reviewing auth flows, middleware, or anything that touches credentials — I want the agent looking at it like someone who's trying to break it, not someone who wrote it.
 
 | ID | Skill | Tag |
 |----|-------|-----|
@@ -67,11 +81,9 @@ Static review skills that scan handlers, middleware, auth flows and secrets boun
 
 ---
 
-### 02 · OWASP & Adversarial Testing _(Skills 15 – 24)_
+### 02 · OWASP & Adversarial Testing _(Skills 15–24)_
 
-Replay the _OWASP top ten_ against your own code.
-
-Adversarial review skills that simulate the canonical exploit patterns and write the failing test cases the agent should have written first.
+The canonical exploit patterns are well-documented. These skills ask the agent to run through them against your actual code rather than generic examples.
 
 | ID | Skill | Tag |
 |----|-------|-----|
@@ -83,11 +95,9 @@ Adversarial review skills that simulate the canonical exploit patterns and write
 
 ---
 
-### 03 · Scalability & Architecture _(Skills 25 – 36)_
+### 03 · Scalability & Architecture _(Skills 25–36)_
 
-Find the call that's _fine on seed data_ and fatal in prod.
-
-Skills that read endpoints and queries with a load profile in mind — N+1s, missing indexes, unbounded scans, fan-out reads, and shared mutable state at the edges.
+The thing that's fine on a seed database and lethal on a real one. I got burned by N+1s enough times that I wrote a whole category around this.
 
 | ID | Skill | Tag |
 |----|-------|-----|
@@ -99,11 +109,9 @@ Skills that read endpoints and queries with a load profile in mind — N+1s, mis
 
 ---
 
-### 04 · Reliability & Failure Analysis _(Skills 37 – 48)_
+### 04 · Reliability & Failure Analysis _(Skills 37–48)_
 
-Assume something _will break._ Then check.
-
-Skills written from on-call experience — retry policies, idempotency, timeouts, partial failure, graceful degradation, and observability you actually need at 3am.
+Retry logic, idempotency, timeouts. The stuff that seems fine until something flaps and you find out your retries have no backoff.
 
 | ID | Skill | Tag |
 |----|-------|-----|
@@ -115,11 +123,9 @@ Skills written from on-call experience — retry policies, idempotency, timeouts
 
 ---
 
-### 05 · Legal & Compliance _(Skills 49 – 58)_
+### 05 · Legal & Compliance _(Skills 49–58)_
 
-Catch the line that becomes a _regulator's question._
-
-Compliance-aware skills for data handling, retention, consent, cross-border transfer, accessibility, and the seams where engineering decisions become legal posture.
+I'm not a lawyer and these are not legal advice. But they've helped me spot the places where an engineering decision becomes a compliance conversation — better to catch those before the conversation happens with a regulator.
 
 | ID | Skill | Tag |
 |----|-------|-----|
@@ -131,11 +137,9 @@ Compliance-aware skills for data handling, retention, consent, cross-border tran
 
 ---
 
-### 06 · Dependency & Supply Chain _(Skills 59 – 68)_
+### 06 · Dependency & Supply Chain _(Skills 59–68)_
 
-Every new import is a _trust decision._
-
-Skills that inspect the dependency graph the agent just expanded — maintainers, age, install scripts, transitive risk, and known advisories.
+Every new `npm install` is a trust decision. These ask the agent to slow down and think about what it just brought in.
 
 | ID | Skill | Tag |
 |----|-------|-----|
@@ -147,11 +151,9 @@ Skills that inspect the dependency graph the agent just expanded — maintainers
 
 ---
 
-### 07 · DevOps & Production Readiness _(Skills 69 – 78)_
+### 07 · DevOps & Production Readiness _(Skills 69–78)_
 
-Is this actually _deployable_, or just runnable?
-
-Skills for the gap between feature-complete and production-ready — health checks, configuration, rollouts, migrations, rollback, secrets, and on-call hand-off.
+The gap between "it runs locally" and "it's actually deployable." Health checks, rollbacks, migration safety, secrets at runtime.
 
 | ID | Skill | Tag |
 |----|-------|-----|
@@ -163,11 +165,9 @@ Skills for the gap between feature-complete and production-ready — health chec
 
 ---
 
-### 08 · Payment & Fraud Analysis _(Skills 79 – 84)_
+### 08 · Payment & Fraud Analysis _(Skills 79–84)_
 
-Money flows demand a _different posture._
-
-Skills for charge, refund, payout and webhook code — signature verification, replay protection, idempotency, currency handling, and the fraud heuristics that catch the obvious losses.
+Anything touching money deserves a more careful pass. Signature verification, replay protection, idempotency — the things you really don't want to get wrong.
 
 | ID | Skill | Tag |
 |----|-------|-----|
@@ -179,113 +179,70 @@ Skills for charge, refund, payout and webhook code — signature verification, r
 
 ---
 
-## Real Failure Patterns the Library Catches
+## Things These Have Helped Me Catch
 
-| Code | Scenario | Caught By |
-|------|----------|-----------|
-| SEC-014 | IDOR hiding behind a UUID — resource fetched without tenant scope check | `security-audit` · `authz-review` |
-| REL-022 | `retry: 5` with no backoff or jitter → self-inflicted DDoS on upstream blip | `reliability` · `sre-readiness` |
-| SCALE-007 | N+1 dressed as "clean code" — `user.org.plan` called inside a list loop | `scalability` · `db-readiness` |
-| PAY-003 | Payment webhook parsed & credited without HMAC signature verification | `payments-fraud` · `webhooks` |
-| SUPPLY-011 | Single utility import pulled in deprecated maintainer's 412-dep graph | `supply-chain` · `dep-audit` |
+A few examples of the kinds of issues that came up when I started using these more consistently. Not claiming they caught everything — just the things I noticed.
 
----
-
-## Operating Principles
-
-These convictions run through every skill in the library:
-
-> **"Think like a real security engineer, not a tutorial."**  
-> Reason about the system as an attacker would. Assume credentials leak, tokens get replayed, and inputs are crafted, not typed.
-
-> **"Test sad paths, not just happy paths."**  
-> Every new function deserves at least three failure tests: wrong input, missing dependency, partial success. The happy path is the easy one.
-
-> **"Never trust the browser as a security boundary."**  
-> Client validation is UX. Server validation is the contract. Authorisation is checked on every read, every write, every join.
-
-> **"Production-grade means recoverable, not perfect."**  
-> Assume something will break. Skills emphasise observability, graceful degradation, and reversible deploys over heroic correctness.
+| Pattern | What happened |
+|---------|---------------|
+| IDOR behind a UUID | Route loaded a resource by UUID without checking it belonged to the calling user. "Unguessable" isn't "authorised". |
+| Retry storm on 5xx | `retry: 5` with no backoff turned a 30-second upstream blip into a self-inflicted DDoS. |
+| N+1 in a list endpoint | `user.org.plan` called inside a loop. Fine on the seed DB, lethal on real data. |
+| Unsigned webhook | Payment webhook parsed and credited without verifying the HMAC signature. |
+| Import with 400+ transitive deps | One utility pulled in a deprecated maintainer's entire package graph. |
 
 ---
 
-## How to Use a Skill
+## Some Things I Keep Reminding Myself (and the Agent)
 
-Skills are plain Markdown files — no runtime, no SDK.
+These aren't rules — just patterns I kept running into that I baked into the skills:
 
-**Option 1 — Focused pass (recommended for reviews):**
-```bash
-claude --skill security-audit "review my auth middleware"
-claude --skill reliability "check this new queue consumer"
-claude --skill scalability "audit the /search endpoint"
-```
-
-**Option 2 — Always-on (add to system prompt):**
-Copy the content of any skill file directly into your agent's system prompt to keep it active for every session.
-
-**Option 3 — On-demand file load:**
-Reference the skill file path in your prompt so the agent reads it when the domain becomes relevant:
-```bash
-claude "using .claude/skills/security-audit.md, review src/api/payments.ts"
-```
+- **"Think like someone trying to break it, not someone who built it."** The agent is predisposed to assume its own output is correct. These skills try to counteract that.
+- **"Test the sad paths."** The happy path always works in dev. The question is what happens when it doesn't.
+- **"Client validation is UX. Server validation is the contract."** Caught myself (and the agent) relying on frontend checks more than once.
+- **"Recoverable is better than perfect."** Observability and rollback plans matter more than getting it right first time.
 
 ---
 
 ## Repository Structure
 
 ```
-skills-website/         ← this website
-├── index.html          ← page structure
+skills-website/
+├── index.html          ← the website
+├── README.md           ← this file
 ├── css/
-│   └── styles.css      ← all styles & design tokens
+│   └── styles.css
 ├── js/
-│   ├── app.js          ← categories data + UI rendering + theme toggle
-│   └── chase.js        ← hero logo animation
-├── images/             ← brand SVG assets
-│   ├── gemini-black.svg
-│   ├── gemini-white.svg
-│   ├── cursor-black.svg
-│   ├── cursor-whte.svg
-│   ├── codex-black.svg
-│   ├── codex-white.svg
-│   ├── claudecode-black.svg
-│   └── claudecode-whte.svg
+│   ├── app.js
+│   └── chase.js
+├── images/             ← brand SVGs
 └── skills/             ← the actual skill Markdown files
-    ├── emil-design-eng/
-    └── impeccable/
 ```
 
 ---
 
-## Contributing
+## A Note on Using These
 
-Skills are designed to be edited. The best contributions come from engineers who've been on-call and found a failure mode the library doesn't catch yet.
+These skills are a starting point, not a checklist that makes your code safe. They're most useful when:
 
-1. **Fork** the repository
-2. **Write** your skill as a self-contained Markdown file
-3. **Test it** by loading it into your agent and running it against real code
-4. **Open a PR** describing what failure mode it catches and what it missed before
+- You're about to merge something in a sensitive area and want a second lens
+- You've been heads-down on a feature and want to surface blind spots
+- You're doing a code review and want domain-specific questions to ask
 
-See the [contribution guide](https://github.com) for the skill format spec and review checklist.
+They're less useful as a replacement for:
+- Actual security audits by people who know what they're doing
+- Load testing
+- Legal and compliance review
+- Experienced colleagues reading your code
 
----
-
-## Stats
-
-| Metric | Value |
-|--------|-------|
-| Total skills | 84 |
-| Categories | 8 |
-| Contributors | 37 |
-| Forks | 1.2k |
-| License | MIT |
+Take what helps. Leave what doesn't. Adapt freely.
 
 ---
 
 ## License
 
-MIT — free forever. See [LICENSE](LICENSE).
+MIT. Do whatever you want with it.
 
 ---
 
-*Designed for engineers, not marketers. v0.4.2 · 2026*
+*Shared openly, with no strings and no guarantees. 2026.*

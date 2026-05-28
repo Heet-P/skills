@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Skills — Production-grade AI engineering skills</title>
-  <meta name="description" content="A curated, open-source library of system prompts that make Claude Code, Codex, Cursor, Cline and other agents reason like senior engineers." />
+  <title>Skills — My personal AI coding skill prompts, shared openly</title>
+  <meta name="description" content="A personal collection of AI coding skills I've built up over time. They've helped me catch real bugs. No guarantees — but maybe they'll help you too." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -70,12 +70,12 @@
       <div class="container">
         <div class="hero-grid">
           <div>
-            <div class="eyebrow">Introducing &nbsp;·&nbsp; v0.4 &nbsp;·&nbsp; MIT Licensed</div>
-            <h1>Production-grade <em>engineering skills</em> for AI coding agents.</h1>
+            <div class="eyebrow">Personal collection &nbsp;·&nbsp; MIT Licensed &nbsp;·&nbsp; No guarantees</div>
+            <h1>Skills I use when coding with <em>AI agents.</em> Shared in case they help you too.</h1>
             <p class="hero-sub">
-              A curated, open-source library of system prompts that make Claude Code, Codex,
-              Cursor, Cline and other agents reason like senior engineers — auditing security,
-              scalability, reliability, and compliance before code ships.
+              These are prompts I've built up over time — things I reach for when I want my
+              AI coding agent to think a little harder about security, reliability, or scale.
+              They've helped me catch real issues. They might help you too.
             </p>
             <div class="hero-actions">
               <a class="btn btn-primary" href="https://github.com" target="_blank" rel="noopener">
@@ -148,13 +148,14 @@
       <div class="container">
         <div class="sec-head">
           <div class="label">
-            <div class="eyebrow">The problem</div>
+            <div class="eyebrow">Why I made these</div>
           </div>
           <div>
-            <h2 class="sec-title">AI coding writes the <em>happy path.</em> Production is the <em>sad path.</em></h2>
+            <h2 class="sec-title">AI writes the <em>happy path.</em> I kept getting burned by the <em>rest.</em></h2>
             <p class="sec-lede">
-              Most agents optimise for code that runs. They rarely think about code that fails —
-              under load, under attack, under audit. Skills make that thinking explicit.
+              I noticed my AI agent was great at making things work — and pretty bad at thinking
+              about what happens when they don't. These skills are my attempt to close that gap.
+              They're not a silver bullet, but they've made me a more careful builder.
             </p>
           </div>
         </div>
@@ -162,27 +163,29 @@
         <div class="problem-grid">
           <div class="problem-cell">
             <div class="problem-num">01</div>
-            <h3 class="problem-h">Generic prompts miss specialist context.</h3>
+            <h3 class="problem-h">I kept getting generic, shallow reviews.</h3>
             <p class="problem-p">
-              A senior security engineer doesn't think like a senior SRE.
-              Skills encode the mental model of each discipline — what they look
-              for, what they distrust, what they verify twice.
+              A security-focused prompt gives you different thinking than a reliability one.
+              I wrote separate skills for each domain so the agent could switch mental models
+              rather than give me the same surface-level checks every time.
             </p>
           </div>
           <div class="problem-cell">
             <div class="problem-num">02</div>
-            <h3 class="problem-h">Agents trust their own output.</h3>
+            <h3 class="problem-h">The agent trusted its own code too much.</h3>
             <p class="problem-p">
-              Skills force adversarial review — re-reading the agent's own diff with the
-              posture of an attacker, an auditor, or an on-call engineer at 3am.
+              These skills ask it to re-read its own output with a more critical eye —
+              like a second reviewer who's actively looking for what could go wrong,
+              not just confirming what's there.
             </p>
           </div>
           <div class="problem-cell">
             <div class="problem-num">03</div>
-            <h3 class="problem-h">Production fails at the seams.</h3>
+            <h3 class="problem-h">The bugs were always at the edges.</h3>
             <p class="problem-p">
-              Race conditions, retry storms, expired tokens, broken webhooks.
-              Skills include checklists drawn from real post-mortems, not generic best practices.
+              Race conditions, missing retries, unsigned webhooks. The stuff that
+              doesn't show up in happy-path tests. I kept hitting the same patterns,
+              so I wrote them down as things to always check.
             </p>
           </div>
         </div>
@@ -194,13 +197,14 @@
       <div class="container">
         <div class="sec-head">
           <div class="label">
-            <div class="eyebrow">The library</div>
+            <div class="eyebrow">The collection</div>
           </div>
           <div>
-            <h2 class="sec-title">Eight disciplines. <em>Eighty-four skills.</em> Drop in as needed.</h2>
+            <h2 class="sec-title">Eight areas I care about. <em>Eighty-four prompts</em> I actually use.</h2>
             <p class="sec-lede">
-              Every skill is a self-contained Markdown file. Paste it into your agent's system
-              prompt, or load it on demand the moment its domain becomes relevant.
+              Each skill is a plain Markdown file — just paste it into your agent's context
+              when the domain is relevant. None of them guarantee anything, but they give
+              the agent a better starting point than a blank slate.
             </p>
           </div>
         </div>
@@ -221,13 +225,13 @@
       <div class="container">
         <div class="sec-head">
           <div class="label">
-            <div class="eyebrow">Operating principles</div>
+            <div class="eyebrow">What I keep coming back to</div>
           </div>
           <div>
-            <h2 class="sec-title">How the skills <em>think.</em></h2>
+            <h2 class="sec-title">Things I remind myself — and the agent — <em>every time.</em></h2>
             <p class="sec-lede">
-              Every skill is written in the voice of a practitioner. These are the
-              convictions repeated, in different words, across the library.
+              These aren't rules handed down from on high. They're just patterns I've
+              found myself thinking about repeatedly, so I baked them into the skills.
             </p>
           </div>
         </div>
@@ -262,13 +266,14 @@
       <div class="container">
         <div class="sec-head">
           <div class="label">
-            <div class="eyebrow">Real scenarios</div>
+            <div class="eyebrow">Real things I've caught</div>
           </div>
           <div>
-            <h2 class="sec-title">Bugs an agent <em>shouldn't have shipped</em> — caught by a skill.</h2>
+            <h2 class="sec-title">Issues that <em>would have shipped</em> without a second look.</h2>
             <p class="sec-lede">
-              A small sample of the failure patterns the library is engineered to surface
-              before code reaches review, let alone production.
+              A few examples of the kinds of things these skills have helped surface
+              in my own work. Not because the agent is careless — but because it
+              needed a more specific lens to look through.
             </p>
           </div>
         </div>
@@ -340,13 +345,14 @@
       <div class="container">
         <div class="sec-head">
           <div class="label">
-            <div class="eyebrow">Using a skill</div>
+            <div class="eyebrow">How I use them</div>
           </div>
           <div>
-            <h2 class="sec-title">Drop one in. <em>Or all of them.</em></h2>
+            <h2 class="sec-title">Drop one in when it's relevant. <em>That's it.</em></h2>
             <p class="sec-lede">
-              Skills are plain Markdown — no runtime, no SDK. Load them as system prompts,
-              slash commands, or as files your agent reads on demand.
+              Plain Markdown — nothing to install, no SDK, no account. I usually load
+              a skill right before a focused review, or keep a couple in my system
+              prompt when I'm working in a sensitive area.
             </p>
           </div>
         </div>
@@ -380,33 +386,33 @@
             <div class="ustep">
               <div class="ustep-n">i.</div>
               <div>
-                <h4 class="ustep-h">Clone the repo into your project.</h4>
+                <h4 class="ustep-h">Grab the files you want.</h4>
                 <p class="ustep-p">
-                  Drop the <code>skills/</code> folder into <code>.claude/</code>,
-                  <code>.cursor/</code>, or wherever your agent looks for prompts.
-                  One file per skill, organised by discipline.
+                  Clone or just copy-paste individual files into <code>.claude/</code>,
+                  <code>.cursor/</code>, or wherever your agent reads prompts from.
+                  Take only what's useful to you.
                 </p>
               </div>
             </div>
             <div class="ustep">
               <div class="ustep-n">ii.</div>
               <div>
-                <h4 class="ustep-h">Invoke on demand, or always-on.</h4>
+                <h4 class="ustep-h">Load it when the domain is relevant.</h4>
                 <p class="ustep-p">
-                  Use <code>--skill &lt;name&gt;</code> for focused passes — a security review on
-                  a PR, a scalability sweep on a new endpoint — or include core skills in
-                  your default system prompt for every session.
+                  I usually reach for a skill right before a focused pass — security
+                  before merging auth changes, reliability before a new async worker.
+                  Or drop it in your system prompt if you want it always on.
                 </p>
               </div>
             </div>
             <div class="ustep">
               <div class="ustep-n">iii.</div>
               <div>
-                <h4 class="ustep-h">Compose, fork, contribute.</h4>
+                <h4 class="ustep-h">Adapt it to your context.</h4>
                 <p class="ustep-p">
-                  Skills are designed to be edited. Fork your own variants, combine
-                  two skills into a domain-specific one, and open a PR when you find
-                  a failure mode the library doesn't catch yet.
+                  These work best as starting points. Edit them, combine them, strip
+                  out the parts that don't fit your stack. If you find something
+                  that works better, I'd love to know.
                 </p>
               </div>
             </div>
@@ -419,11 +425,12 @@
     <section class="cta" id="github">
       <div class="container">
         <div>
-          <div class="eyebrow">Open source · MIT</div>
-          <h2>The repo is <em>the product.</em></h2>
+          <div class="eyebrow">Free · MIT · No strings</div>
+          <h2>Take what's useful. <em>Leave what isn't.</em></h2>
           <p>
-            Everything lives on GitHub. Browse the catalogue, copy the skills you need,
-            fork the ones you'd write differently, and send back the ones you wish existed.
+            Everything is on GitHub. These are my skills — no team behind them,
+            no roadmap, no promises. If something here saves you from a bad deploy
+            or a security headache, that's good enough for me.
           </p>
           <div class="cta-actions">
             <a class="btn btn-primary" href="https://github.com" target="_blank" rel="noopener">
@@ -431,10 +438,9 @@
                 <path
                   d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.74.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11.05 11.05 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.26 5.68.41.35.78 1.05.78 2.11 0 1.53-.01 2.76-.01 3.13 0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z" />
               </svg>
-              View on GitHub
+              Browse on GitHub
             </a>
-            <a class="btn btn-ghost" href="https://github.com" target="_blank" rel="noopener">Read the contribution
-              guide →</a>
+            <a class="btn btn-ghost" href="https://github.com" target="_blank" rel="noopener">See what's in there →</a>
           </div>
         </div>
         <div class="cta-stats">
@@ -443,16 +449,16 @@
             <div class="v">84</div>
           </div>
           <div class="cta-stat">
-            <div class="k">Contributors</div>
-            <div class="v">37</div>
+            <div class="k">Categories</div>
+            <div class="v">8</div>
           </div>
           <div class="cta-stat">
-            <div class="k">Forks</div>
-            <div class="v">1.2k</div>
+            <div class="k">License</div>
+            <div class="v">MIT</div>
           </div>
           <div class="cta-stat">
-            <div class="k">Issues open</div>
-            <div class="v">12</div>
+            <div class="k">Guarantee</div>
+            <div class="v">None</div>
           </div>
         </div>
       </div>
@@ -465,8 +471,8 @@
       <div class="ft">
         <div>
           <div class="ft-brand">Skills <em>/oss</em></div>
-          <p>An open library of production-grade engineering skills for AI coding agents.
-            Built by engineers who've been on call. MIT licensed, community owned.</p>
+          <p>My personal collection of AI coding skills, shared openly. They've helped me —
+            maybe they'll help you too. No guarantees, just prompts.</p>
         </div>
         <div>
           <h4>Library</h4>
@@ -497,8 +503,8 @@
         </div>
       </div>
       <div class="ft-bot">
-        <div class="l">v0.4.2 · MIT · 2026</div>
-        <div>Designed for engineers, not marketers.</div>
+        <div class="l">MIT · 2026 · personal project</div>
+        <div>Shared with no guarantees — use your own judgement.</div>
       </div>
     </div>
   </footer>
