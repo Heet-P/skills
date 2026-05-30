@@ -133,7 +133,7 @@ npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-fro
 
 ### ✨ Emil Design Engineering (`emil-design-eng/`)
 
-> **Credit:** This skill encodes [Emil Kowalski](https://emilkowalski.com)'s philosophy on UI polish, component design, animation decisions, and the invisible details that make software feel great. I did not write it — all credit goes to Emil. If you want to go deeper, his course is at [animations.dev](https://animations.dev/).
+> **Credit:** This skill encodes [Emil Kowalski](https://emilkowal.ski/)'s philosophy on UI polish, component design, animation decisions, and the invisible details that make software feel great. I did not write it — all credit goes to Emil. If you want to go deeper, his course is at [animations.dev](https://animations.dev/).
 
 UI polish and animation philosophy, based on Emil Kowalski's design engineering work.
 
