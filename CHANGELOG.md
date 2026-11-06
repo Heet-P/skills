@@ -2,6 +2,11 @@
 
 All notable changes to this repo. Versions follow [semver](https://semver.org): a new skill or command is a minor release; renaming or removing one is a major release, because it breaks `npx skills add --skill <name>`.
 
+## [Unreleased]
+
+### Added
+- New social preview image, and Open Graph / Twitter card tags so links to the site show it.
+
 ## [1.0.0] - 2026-11-06
 
 The repo's focus changes from code-audit skills to building things: scroll sites, 3D sites and demo videos.
