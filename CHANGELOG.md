@@ -18,5 +18,6 @@ The repo's focus changes from code-audit skills to building things: scroll sites
 
 ### Removed
 - `security-audit`, `scalability-architecture` and `legal-check`. Use an earlier commit if you still need them.
+- The copies of `design-taste-frontend`, `emil-design-eng` and `impeccable`. They're credited and linked instead; install them from their authors' repos.
 
 [1.0.0]: https://github.com/Heet-P/skills/releases/tag/v1.0.0

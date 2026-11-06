@@ -88,7 +88,7 @@ These shaped how I work. All credit goes to their authors. Install from the orig
 | [pbakaus](https://github.com/pbakaus/impeccable) | impeccable: a design system with 20+ commands | `npx skills add pbakaus/impeccable` |
 | [Leonxlnx](https://github.com/Leonxlnx/taste-skill) | design-taste-frontend: anti-slop frontend | `npx skills add Leonxlnx/taste-skill` |
 
-Reference copies of `design-taste-frontend`, `emil-design-eng` and `impeccable` are kept in `skills/`. Install them from their original repos above, which is where updates land.
+They aren't copied into this repo. Install them from their original repos above, which is where updates land.
 
 ---
 
@@ -98,10 +98,7 @@ Reference copies of `design-taste-frontend`, `emil-design-eng` and `impeccable` 
 skills/
 ├── scrollfx/SKILL.md          ← mine: scroll-driven sites
 ├── web3d/SKILL.md             ← mine: 3D websites
-├── demovideo/SKILL.md         ← mine: hackathon videos in Remotion
-├── design-taste-frontend/     ← credited (Leonxlnx)
-├── emil-design-eng/           ← credited (Emil Kowalski)
-└── impeccable/                ← credited (pbakaus)
+└── demovideo/SKILL.md         ← mine: hackathon videos in Remotion
 videos/                        ← showcase videos + posters
 demos/                         ← static exports of the two 3D landing pages
 index.html, css/, js/          ← the website (static, no build)
@@ -111,7 +108,7 @@ index.html, css/, js/          ← the website (static, no build)
 
 ## License
 
-My skills and the website are [MIT](LICENSE). The credited skills belong to their authors under their own licences: `emil-design-eng` and `design-taste-frontend` are MIT, `impeccable` is Apache 2.0.
+[MIT](LICENSE). The credited skills above live in their authors' repos, under their own licences.
 
 ## Contributing
 

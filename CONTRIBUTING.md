@@ -16,7 +16,7 @@ Thanks for wanting to help. This repo is a handful of Markdown skills plus a sta
 3. **Keep commands short and literal.** `/web3d glow` is good, `/web3d enhance-visual-experience` is not.
 4. **Don't change the frontmatter `name`.** It's the install id (`npx skills add Heet-P/skills --skill <name>`) and must match the folder.
 
-The three credited skills in `skills/` (`design-taste-frontend`, `emil-design-eng`, `impeccable`) belong to their authors. Send changes to their original repos instead.
+The credited skills listed in the README live in their authors' repos. Send changes for those there.
 
 ## Checking your change
 
