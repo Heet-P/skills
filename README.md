@@ -1,264 +1,120 @@
 # Skills /oss
 
-> These are my personal collection of skills that I use which have given me some good results over the time and I am just doing this so that they may be useful to someone else out there like me. They in no way guarantee any protection but they can help you get there.
+**Agent skills that teach Claude Code, Cursor and Codex to build scroll-driven sites, 3D websites and hackathon demo videos.**
 
-> **Note on the design skills:** Three of the skills here — `design-taste-frontend`, `emil-design-eng`, and `impeccable` — are not mine. They were some of the first designing skills I used which I liked and gave a good output, so I kept them here for reference. Full credit goes to their real owners, as detailed below.
+[![CI](https://github.com/Heet-P/skills/actions/workflows/ci.yml/badge.svg)](https://github.com/Heet-P/skills/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
----
-
-## What this is
-
-When I started using AI agents for real work, I noticed two gaps:
-
-1. **Agents are blind to what can go wrong.** Security holes, N+1 queries, unsigned webhooks, retry storms — they sail right past all of it.
-2. **Agents default to safe, generic design.** Landing pages that look like every other SaaS landing page. Animations that are technically present but not thoughtful.
-
-These skills are my attempt to close both gaps. Some are audit engines that ask the agent to re-read its own output through a specific lens. Others are design philosophy documents that push it toward better aesthetic decisions.
-
-**What these are:**
-- Plain Markdown (and `.skill`) files you drop into your agent's context
-- Things that have worked for me across real projects
-
-**What these aren't:**
-- A guarantee your code is secure, scalable, or compliant
-- A substitute for actual expert review
-- A product with a team behind it
-
----
-
-## The Skills
-
-### 🔒 Security Audit (`security-audit/`)
-
-A deep adversarial security audit engine. Think like an attacker — not a developer.
-
-This one asks the agent to map the full attack surface, simulate real exploits step-by-step, test sad paths and race conditions, and produce a structured findings report. It covers OWASP Top 10, IDOR, broken access control, payment tampering, file upload exploits, webhook forgery, RLS bypass, rate limiting gaps, and deployment secret exposure.
-
-Comes with:
-- `references/REPORT_FORMAT.md` — per-issue format with worked exploit examples
-- `references/ATTACK_VECTORS.md` — OWASP checklist, security headers audit, RLS table, rate limiting matrix, sad-path test matrix, injection payload reference
+![A 3D solar-farm site built with /web3d scrolling from day to night, then the RelayCare launch film made with /demovideo](.github/demo.gif)
 
 ```bash
-# Add this skill to your workspace using npx
-npx skills add Heet-P/skills --skill security-audit
-
-# Or for the pre-packaged .skill file:
-npx skills add Heet-P/skills --skill security-audit.skill
-
-# Usage with Claude Code
-/security-audit full          # Full adversarial audit
-/security-audit auth          # Auth and session only
-/security-audit payments      # Payment security and business logic
-/security-audit access-control # IDOR and broken access control
-/security-audit score         # Full audit + security score (0-100)
+npx skills add Heet-P/skills --skill scrollfx web3d demovideo
 ```
 
----
-
-### 📈 Scalability Architecture (`scalability-architecture/`)
-
-A scalability and architecture audit engine. Find the thing that's fine on seed data and fatal in prod.
-
-Maps the entire system, simulates traffic at each stage (100 concurrent → viral spike), identifies breaking points by layer, and produces tiered recommendations — Free, Low-Cost, and Enterprise — so you can pick the right fix for your actual stage.
-
-Comes with:
-- `references/REPORT_FORMAT.md` — per-issue format with worked examples (connection pooling, missing indexes, CPU on request thread, stateful sessions)
-- `references/SCALING_TIERS.md` — tier tables for database, caching, queues, deployment, observability; traffic stage roadmap from 1K to 1M+ DAU; failure simulation reference
-
-```bash
-# Add this skill to your workspace using npx
-npx skills add Heet-P/skills --skill scalability-architecture
-
-# Or for the pre-packaged .skill file:
-npx skills add Heet-P/skills --skill scalability-architecture.skill
-
-# Usage with Claude Code
-/scalability-architecture audit       # Full audit
-/scalability-architecture db          # Database layer only
-/scalability-architecture roadmap     # 1K → 1M user roadmap
-/scalability-architecture reliability # Failure analysis
-/scalability-architecture score       # Full audit + production readiness score
-```
+**Live demo:** [skills.heetp.tech](https://skills.heetp.tech). Scroll the two 3D sites yourself: [SolarLeads](https://skills.heetp.tech/demos/solarleads/) · [YieldGuard](https://skills.heetp.tech/demos/yieldguard/)
 
 ---
 
-### ⚖️ Legal Check (`legal-check/`)
+Every scroll site, 3D landing page and hackathon video above was built by prompting an agent. These skills are what I learned doing it: the patterns that worked and the bugs I hit, so the agent gets them right the first time.
 
-A legal, privacy, and compliance audit engine. Not legal advice — but better than nothing.
+No SDK, no API keys, no build step. A skill is a Markdown file. After installing, type a command (`/scrollfx smooth`) or just describe what you want; the agent loads the skill when the task matches. With no command, each skill asks what you're after and suggests what fits.
 
-Scans the codebase for what it actually does (auth, payments, AI, analytics, uploads), then surfaces the specific compliance gaps that matter: missing consent flows, unsigned webhooks, no account deletion, unconsented cookies, AI output not disclosed, data retained without a policy. Covers GDPR, CCPA, COPPA, LGPD, PIPEDA, UK GDPR, PCI-DSS, and the EU AI Act.
-
-Comes with:
-- `references/CHECKLIST.md` — mandatory compliance checklist across consent, policies, user rights, auth, payments, data handling, AI, cookies, and platform liability
-- `references/REPORT_FORMAT.md` — per-issue format with worked examples (missing signup consent, no cookie banner, no account deletion, AI output not labeled)
-
-```bash
-# Add this skill to your workspace using npx
-npx skills add Heet-P/skills --skill legal-check
-
-# Or for the pre-packaged .skill file:
-npx skills add Heet-P/skills --skill legal-check.skill
-
-# Usage with Claude Code
-/legal-check audit        # Full audit
-/legal-check gdpr         # GDPR only
-/legal-check consent      # Consent flow implementation only
-/legal-check user-rights  # User rights gaps only
-/legal-check score        # Full audit + compliance score (0-100)
-```
+Works with Claude Code, Codex, Cursor, Cline, Roo and OpenHands. Want only one? `npx skills add Heet-P/skills --skill web3d`.
 
 ---
 
-### 🎨 Design Taste — Frontend (`design-taste-frontend/`)
+## My skills
 
-> **Credit:** I did not write this skill. I found it, used it, got good results, and kept it here so I always have it to hand. If you know who originally wrote it, let me know and I'll update this attribution properly.
+### ScrollFX: scroll-driven sites (`skills/scrollfx/`)
 
-An anti-slop frontend skill for landing pages, portfolios, and redesigns.
+GSAP ScrollTrigger + Lenis for React/Next.js. Every effect is cleaned up on unmount, split for mobile, and respects reduced motion.
 
-This is the one I reach for when I want the agent to stop defaulting to Inter + slate-900 + centered hero + three equal feature cards. It reads the brief first, infers the right design direction, and ships interfaces that don't look like they came from a template.
+| Command | What it does |
+|---|---|
+| `/scrollfx smooth` | Smooth scroll for the whole site: one Lenis instance synced to ScrollTrigger |
+| `/scrollfx reveal` | Text fills in word by word as you scroll |
+| `/scrollfx marquee` | Image rows that slide sideways as you scroll |
+| `/scrollfx grow` | A hero image that scales up and lands on a target spot |
+| `/scrollfx flip` | Tiles that do a 3D flip on hover |
+| `/scrollfx dome` | Images on a draggable 3D sphere with inertia (CSS only) |
+| `/scrollfx audit` | Checks existing scroll code against the checklist and fixes it |
 
-Covers: typography discipline (why not to default to serif, which display fonts to reach for), color calibration (the specific palette families that are banned as defaults and what to use instead), layout rules (anti-center bias, bento grids, section-repetition ban), image strategy (generate real assets, no div-based fake screenshots), copy self-audit, responsive discipline, accessibility.
+*Learned from:* a hackathon event site with word reveals, opposite-direction photo marquees, a dark-mode flip mid-scroll, a pixel-font loader and a 3D photo dome.
 
-It also includes canonical code skeletons for the scroll patterns that agents usually get wrong — sticky stack, horizontal pan, scroll reveal.
+### Web3D: 3D websites (`skills/web3d/`)
 
-**Installation:**
-```bash
-npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"
-```
+three.js / React Three Fiber scenes built entirely from code (no model files).
 
----
+| Command | What it does |
+|---|---|
+| `/web3d scene` | A fast, client-only 3D scene with proper cleanup |
+| `/web3d camera` | Camera flies between keyframes as the page scrolls |
+| `/web3d glow` | Bloom + ambient occlusion that only hits what you choose |
+| `/web3d labels` | HTML labels pinned to 3D points |
+| `/web3d pick` | Click and hover 3D objects, results sent to React |
+| `/web3d perf` | Adaptive quality, pause when hidden, instancing, disposal |
+| `/web3d audit` | Checks an existing 3D page against the checklist and fixes it |
 
-### ✨ Emil Design Engineering (`emil-design-eng/`)
+*Learned from:* **SolarLeads** ([source](https://github.com/Heet-P/SGP-II)), a scroll-driven R3F solar farm, and **YieldGuard** ([source](https://github.com/Parva-28/bob-ai-hackathon-DuckDuckGo)), a three.js semiconductor-fab scene with clickable wafers.
 
-> **Credit:** This skill encodes [Emil Kowalski](https://emilkowal.ski/)'s philosophy on UI polish, component design, animation decisions, and the invisible details that make software feel great. I did not write it — all credit goes to Emil. If you want to go deeper, his course is at [animations.dev](https://animations.dev/).
+Both landing pages run live on the site: [`demos/solarleads/`](https://skills.heetp.tech/demos/solarleads/) and [`demos/yieldguard/`](https://skills.heetp.tech/demos/yieldguard/).
 
-UI polish and animation philosophy, based on Emil Kowalski's design engineering work.
+### DemoVideo: hackathon videos in code (`skills/demovideo/`)
 
-This one is less about audits and more about taste. It covers the animation decision framework (should this animate at all? what easing? how fast?), spring animations, clip-path patterns, gesture and drag interactions, performance rules (only animate transform and opacity), accessibility (prefers-reduced-motion), and the Sonner principles for building components people actually love.
+Remotion launch films and app walkthroughs, all from prompts.
 
-I started using this one early on and kept it because it genuinely changed how I thought about animation decisions — and more importantly, how my agent made them.
+| Command | What it does |
+|---|---|
+| `/demovideo launch` | A 45–65s launch film: kinetic type, real UI, cuts on the beat |
+| `/demovideo walkthrough` | Record the real app with Playwright, timed to narration, with captions and zooms |
+| `/demovideo hook` | A 10-second slam-cut opener |
+| `/demovideo music` | A soundtrack and sound effects generated in code, synced to the cuts |
+| `/demovideo render` | 1080p + 4K, loudness normalised to -14 LUFS |
 
-**Installation:**
-```bash
-npx skills add emilkowalski/skill
-```
-
----
-
-### 🔧 Impeccable (`impeccable/`)
-
-> **Credit:** This skill is based on [Anthropic's frontend-design skill](https://github.com/anthropics/claude-code-skills), licensed under Apache 2.0. I did not write it. Full attribution is in the skill's own metadata (`license: Apache 2.0. Based on Anthropic's frontend-design skill.`). I kept it here because it was one of the first structured design skills I used that produced reliably good results.
-
-A full-featured frontend design system with 20+ sub-commands for every phase of UI work.
-
-This is the most structured of the design skills. It has context loading (PRODUCT.md + DESIGN.md), a brand vs. product register system, and a command menu covering the full design workflow:
-
-| Category | Commands |
-|----------|----------|
-| Build | `craft`, `shape`, `teach`, `document`, `extract` |
-| Evaluate | `critique`, `audit` |
-| Refine | `polish`, `bolder`, `quieter`, `distill`, `harden`, `onboard` |
-| Enhance | `animate`, `colorize`, `typeset`, `layout`, `delight`, `overdrive` |
-| Fix | `clarify`, `adapt`, `optimize` |
-| Iterate | `live` |
-
-I use this for bigger UI projects where I want the agent working within a defined design system rather than making up decisions from scratch.
-
-**Installation:**
-```bash
-npx skills add pbakaus/impeccable
-```
+*Made with it:*
+- RelayCare launch film and walkthrough ([`videos/`](videos/))
+- YieldGuard for the IBM Bob hackathon ([`videos/yieldguard.mp4`](videos/yieldguard.mp4)), a team project with Dhrumil Amin, Parva Chhatrola and Akshat Patel
+- SAHARA for the [Meta AI Hackathon](https://youtu.be/foh6WNTnbp0) and [Smart India Hackathon](https://www.youtube.com/watch?v=sk_WdN6rbXo)
 
 ---
 
-## What These Have Helped Me Catch
+## Skills I use but didn't write
 
-| Pattern | What happened |
-|---------|---------------|
-| IDOR behind a UUID | Route loaded a resource by UUID without checking it belonged to the calling user. "Unguessable" isn't "authorised". |
-| Retry storm on 5xx | `retry: 5` with no backoff turned a 30-second upstream blip into a self-inflicted DDoS. |
-| N+1 in a list endpoint | `user.org.plan` called inside a loop. Fine on the seed DB, lethal on real data. |
-| Unsigned webhook | Payment webhook parsed and credited without verifying the HMAC signature. |
-| Generic landing page design | Default Inter + purple gradient + centered hero. Replaced with something that actually felt like the project. |
+These shaped how I work. All credit goes to their authors. Install from the original source.
 
----
+| Author | Skills | Install |
+|---|---|---|
+| [Emil Kowalski](https://emilkowal.ski/) | emil-design-eng, animate, animation-performance, animation-vocabulary, apple-design, ask-sonner, break-ui, find-animation-opportunities, improve-animations, mobile-native, prototype, review-animations | `npx skills add emilkowalski/skills` |
+| [pbakaus](https://github.com/pbakaus/impeccable) | impeccable: a design system with 20+ commands | `npx skills add pbakaus/impeccable` |
+| [Leonxlnx](https://github.com/Leonxlnx/taste-skill) | design-taste-frontend: anti-slop frontend | `npx skills add Leonxlnx/taste-skill` |
 
-## How I Use These
-
-You can easily add skills to your workspace using `npx skills add`. I usually load a skill right before a focused pass.
-
-```bash
-# Example: Adding one of my skills
-npx skills add Heet-P/skills --skill security-audit
-
-# Example: Adding the Impeccable design skill
-npx skills add pbakaus/impeccable
-
-# After installing, just ask the agent to re-read its own output through that lens
-claude --skill security-audit "audit the auth changes in this PR"
-```
-
-The simplest approach: find the skill that matches what you're about to do, paste it into context, and ask the agent to re-read its own output through that lens.
+Reference copies of `design-taste-frontend`, `emil-design-eng` and `impeccable` are kept in `skills/`. Install them from their original repos above, which is where updates land.
 
 ---
 
-## Repository Structure
+## Repository structure
 
 ```
 skills/
-├── security-audit/             ← adversarial security audit
-│   ├── SKILL.md
-│   └── references/
-│       ├── REPORT_FORMAT.md
-│       └── ATTACK_VECTORS.md
-├── scalability-architecture/   ← scalability & architecture audit
-│   ├── SKILL.md
-│   └── references/
-│       ├── REPORT_FORMAT.md
-│       └── SCALING_TIERS.md
-├── legal-check/                ← legal, privacy & compliance audit
-│   ├── SKILL.md
-│   └── references/
-│       ├── CHECKLIST.md
-│       └── REPORT_FORMAT.md
-├── design-taste-frontend/      ← anti-slop frontend design
-│   └── SKILL.md
-├── emil-design-eng/            ← UI polish & animation philosophy
-│   └── SKILL.md
-└── impeccable/                 ← full frontend design system (20+ commands)
-    ├── SKILL.md
-    ├── reference/              ← per-command reference files
-    ├── agents/
-    └── scripts/
+├── scrollfx/SKILL.md          ← mine: scroll-driven sites
+├── web3d/SKILL.md             ← mine: 3D websites
+├── demovideo/SKILL.md         ← mine: hackathon videos in Remotion
+├── design-taste-frontend/     ← credited (Leonxlnx)
+├── emil-design-eng/           ← credited (Emil Kowalski)
+└── impeccable/                ← credited (pbakaus)
+videos/                        ← showcase videos + posters
+demos/                         ← static exports of the two 3D landing pages
+index.html, css/, js/          ← the website (static, no build)
 ```
-
----
-
-## A Note on Using These
-
-These skills are a starting point, not a checklist that makes your code safe or your design good. They're most useful when:
-
-- You're about to merge something sensitive and want a second lens
-- You've been heads-down on a feature and want to surface blind spots
-- You want the agent thinking about craft instead of just correctness
-
-They're less useful as a replacement for:
-- Actual security audits by people who know what they're doing
-- Real design feedback from people with taste
-- Legal and compliance review by a professional
-- Load testing
-
-Take what helps. Leave what doesn't. Adapt freely.
 
 ---
 
 ## License
 
-The skill files in this repo are individually licensed — check the `LICENSE.txt` in each folder. Most are Apache 2.0. The website code is MIT.
+My skills and the website are [MIT](LICENSE). The credited skills belong to their authors under their own licences: `emil-design-eng` and `design-taste-frontend` are MIT, `impeccable` is Apache 2.0.
 
----
+## Contributing
+
+New recipes, fixes from your own builds and showcase links are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 *Shared openly, with no strings and no guarantees. 2026.*

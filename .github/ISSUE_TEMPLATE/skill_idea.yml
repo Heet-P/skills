@@ -1,0 +1,26 @@
+name: Recipe or rule for a skill
+description: A new command, recipe, or a rule the agent keeps getting wrong
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Skill
+      options:
+        - scrollfx
+        - web3d
+        - demovideo
+        - A new skill
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What should the agent do (or stop doing)?
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Where did you run into this?
+      description: Rules here come from real builds. A link to a project, commit or bug helps a lot.

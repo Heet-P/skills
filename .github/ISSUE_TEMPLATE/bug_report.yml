@@ -1,0 +1,28 @@
+name: Bug report
+description: Something on the site, an install, or a skill's instructions is broken
+labels: [bug]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where
+      options:
+        - scrollfx
+        - web3d
+        - demovideo
+        - Install (npx skills add)
+        - Website / live demos
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+      description: For skill issues, include the command or prompt you used and which agent (Claude Code, Cursor, Codex…).
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      placeholder: "1. npx skills add …\n2. /web3d scene …\n3. …"
